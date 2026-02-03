@@ -25,6 +25,10 @@ on:
         description: Optional destination directory for the artifact (defaults to inputs.path).
         type: string
         default: ""
+      exclude_paths:
+        description: Exclude files matching pattern
+        type: string
+        default: ""
 
     secrets:
       R2_ACCESS_KEY_ID:
@@ -71,10 +75,12 @@ jobs:
           BUCKET: ${{ secrets.R2_BUCKET }}
           PATH_TO_SYNC: ${{ inputs.path }}
           TARGET_DIR: ${{ inputs.target_dir }}
+          EXCLUDE_PATHS: ${{ inputs.exclude_paths }}
         run: >-
           rclone sync -v
           --checksum
           --no-update-modtime
           --config="/dev/null"
+          --exclude=$EXCLUDE_PATHS
           $PATH_TO_SYNC
           :s3,env_auth:$BUCKET/$TARGET_DIR/
