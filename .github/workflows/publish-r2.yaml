@@ -81,6 +81,6 @@ jobs:
           --checksum
           --no-update-modtime
           --config="/dev/null"
-          --exclude=$EXCLUDE_PATHS
-          $PATH_TO_SYNC
-          :s3,env_auth:$BUCKET/$TARGET_DIR/
+          --exclude="$EXCLUDE_PATHS"
+          "$PATH_TO_SYNC"
+          :s3,env_auth:"$BUCKET/$TARGET_DIR/"
